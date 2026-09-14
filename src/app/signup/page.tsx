@@ -1,25 +1,105 @@
+
 "use client";
 
-import React from "react";
+// React hooks
+import React, { useEffect, useState } from "react";
+
+// Next.js
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+// Axios for API requests
 import axios from "axios";
 
+// Toast notifications
+import { toast } from "react-hot-toast";
+
 export default function SignupPage() {
-  const [user, setUser] = React.useState({
+  // ================================
+  // USER FORM STATE
+  // ================================
+  const [user, setUser] = useState({
     email: "",
     password: "",
     username: "",
   });
 
+  // Next.js router
+  const router = useRouter();
+
+  // ================================
+  // BUTTON & LOADING STATE
+  // ================================
+
+  // Controls whether signup button is disabled
+  const [disabledButton, setdisabledButton] = useState(true);
+
+  // Controls loading state while API request is running
+  const [loading, setloading] = useState(false);
+
+  // ================================
+  // CHECK FORM INPUTS
+  // ================================
+  // Whenever user changes any input,
+  // check whether all fields contain something.
+  useEffect(() => {
+    if (
+      user.email.length > 0 &&
+      user.password.length > 0 &&
+      user.username.length > 0
+    ) {
+      // All fields are filled
+      setdisabledButton(false);
+    } else {
+      // At least one field is empty
+      setdisabledButton(true);
+    }
+  }, [user]);
+
+  // ================================
+  // SIGNUP FUNCTION
+  // ================================
   const onSignup = async () => {
-    // signup logic
+    try {
+      // Start loading
+      setloading(true);
+
+      // Send signup data to backend
+      const response = await axios.post("/api/users/signup", user);
+
+      // Check response in browser console
+      console.log("Signup success:", response.data);
+
+      // Show success toast
+      toast.success("ACCOUNT CREATED SUCCESSFULLY!");
+
+      // Redirect user to login page
+      router.push("/login");
+    } catch (error) {
+      // Print error for debugging
+      console.log("Signup error:", error);
+
+      // Check if error came from Axios
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message ||
+            "SIGNUP FAILED. PLEASE TRY AGAIN!"
+        );
+      } else {
+        toast.error("SOMETHING WENT WRONG!");
+      }
+    } finally {
+      // Stop loading whether request succeeds or fails
+      setloading(false);
+    }
   };
 
   return (
     <main className="min-h-screen bg-[#f3ead8] text-[#3b2a20] flex items-center justify-center px-4 relative overflow-hidden">
 
-      {/* Retro Grid */}
+      {/* =====================================
+          RETRO BACKGROUND GRID
+      ====================================== */}
       <div
         className="
           absolute inset-0 opacity-20
@@ -29,7 +109,9 @@ export default function SignupPage() {
         "
       />
 
-      {/* CRT Scanlines */}
+      {/* =====================================
+          CRT SCANLINES
+      ====================================== */}
       <div
         className="
           pointer-events-none
@@ -39,7 +121,9 @@ export default function SignupPage() {
         "
       />
 
-      {/* Main Terminal */}
+      {/* =====================================
+          MAIN TERMINAL / SIGNUP CARD
+      ====================================== */}
       <div
         className="
           relative
@@ -52,7 +136,9 @@ export default function SignupPage() {
         "
       >
 
-        {/* Header */}
+        {/* =====================================
+            TERMINAL HEADER
+        ====================================== */}
         <div
           className="
             flex
@@ -68,17 +154,21 @@ export default function SignupPage() {
             font-bold
           "
         >
-          <span>CLIENT_SERVER</span>
+          <span>CLIENT_SERVER\</span>
 
           <span className="text-xs">
             ● ONLINE
           </span>
         </div>
 
-        {/* Content */}
+        {/* =====================================
+            MAIN CONTENT
+        ====================================== */}
         <div className="p-6 md:p-8">
 
-          {/* Title */}
+          {/* =====================================
+              TITLE
+          ====================================== */}
           <div className="mb-8">
 
             <p className="text-xs text-[#8b6f47] mb-2 font-mono">
@@ -95,17 +185,29 @@ export default function SignupPage() {
                 drop-shadow-[3px_3px_0px_#c9b99a]
               "
             >
-              SIGN<span className="text-[#a0522d]">UP</span>
+              SIGN
+              <span className="text-[#a0522d]">
+                UP
+              </span>
             </h1>
 
-            <div className="h-0.75 w-24 bg-[#a0522d] mt-3" />
-
+            <div className="h-1 w-24 bg-[#a0522d] mt-3" />
           </div>
 
-          {/* Username */}
+          {/* =====================================
+              USERNAME INPUT
+          ====================================== */}
           <div className="mb-5">
 
-            <label className="block text-xs font-mono mb-2 text-[#6f5238]">
+            <label
+              className="
+                block
+                text-xs
+                font-mono
+                mb-2
+                text-[#6f5238]
+              "
+            >
               USERNAME
             </label>
 
@@ -135,13 +237,22 @@ export default function SignupPage() {
                 transition
               "
             />
-
           </div>
 
-          {/* Email */}
+          {/* =====================================
+              EMAIL INPUT
+          ====================================== */}
           <div className="mb-5">
 
-            <label className="block text-xs font-mono mb-2 text-[#6f5238]">
+            <label
+              className="
+                block
+                text-xs
+                font-mono
+                mb-2
+                text-[#6f5238]
+              "
+            >
               EMAIL_ADDRESS
             </label>
 
@@ -171,13 +282,22 @@ export default function SignupPage() {
                 transition
               "
             />
-
           </div>
 
-          {/* Password */}
+          {/* =====================================
+              PASSWORD INPUT
+          ====================================== */}
           <div className="mb-6">
 
-            <label className="block text-xs font-mono mb-2 text-[#6f5238]">
+            <label
+              className="
+                block
+                text-xs
+                font-mono
+                mb-2
+                text-[#6f5238]
+              "
+            >
               PASSWORD
             </label>
 
@@ -207,36 +327,70 @@ export default function SignupPage() {
                 transition
               "
             />
-
           </div>
 
-          {/* Button */}
+          {/* =====================================
+              SIGNUP BUTTON
+          ====================================== */}
           <button
             onClick={onSignup}
-            className="
+
+            // Disable button if:
+            // 1. Any field is empty
+            // 2. API request is running
+            disabled={disabledButton || loading}
+
+            className={`
               w-full
               border-2
               border-[#4a3426]
-              bg-[#a0522d]
-              text-[#f8f0df]
               py-3
               font-mono
               font-black
               tracking-widest
               uppercase
-              hover:bg-[#4a3426]
-              hover:text-[#f3ead8]
-              hover:shadow-[5px_5px_0px_#c9b99a]
-              active:translate-y-0.5
               transition-all
-            "
+
+              ${
+                disabledButton || loading
+                  ? `
+                    bg-[#c9b99a]
+                    text-[#8b6f47]
+                    cursor-not-allowed
+                    opacity-70
+                    shadow-[3px_3px_0px_#8b6f47]
+                  `
+                  : `
+                    bg-[#a0522d]
+                    text-[#f8f0df]
+                    hover:bg-[#4a3426]
+                    hover:text-[#f3ead8]
+                    hover:shadow-[5px_5px_0px_#c9b99a]
+                    active:translate-y-0.5
+                  `
+              }
+            `}
           >
-            [ CREATE ACCOUNT ]
+            {/* Change button text according to state */}
+            {loading
+              ? "[ CREATING_ACCOUNT... ]"
+              : disabledButton
+              ? "[ ENTER ALL FIELDS ]"
+              : "[ CREATE ACCOUNT ]"}
           </button>
 
-          {/* Login */}
-          <p className="text-center text-xs font-mono text-[#8b6f47] mt-6">
-
+          {/* =====================================
+              LOGIN LINK
+          ====================================== */}
+          <p
+            className="
+              text-center
+              text-xs
+              font-mono
+              text-[#8b6f47]
+              mt-6
+            "
+          >
             EXISTING_USER?
 
             <Link
@@ -251,12 +405,12 @@ export default function SignupPage() {
             >
               LOGIN_
             </Link>
-
           </p>
-
         </div>
 
-        {/* Footer */}
+        {/* =====================================
+            TERMINAL FOOTER
+        ====================================== */}
         <div
           className="
             border-t-2
@@ -270,12 +424,11 @@ export default function SignupPage() {
             justify-between
           "
         >
-          <span>CLIENT: ONLINE</span>
-          <span>SERVER: CONNECTED</span>
+          <span>CLIENT: ONLINE\</span>
+          <span>SERVER: CONNECTED\</span>
         </div>
-
       </div>
-
     </main>
   );
 }
+

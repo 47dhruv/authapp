@@ -1,20 +1,29 @@
 "use client";
 
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function LoginPage() {
-  const [user, setUser] = React.useState({
+  const [user, setUser] = useState({
     email: "",
     password: "",
   });
-
+  const [disabledButton, setdisabledButton] = useState(false)
+  const [loading,setLoading ] = useState(false)
   const router = useRouter();
+  useEffect(() => {
+    if (user.email.length>0 && user.password.length>0) {
+      setdisabledButton(false)
+    }else{
+      true
+    }
+  }, [user])
+  
 
   const onLogin = async () => {
-    // login logic here
+    
   };
 
   return (
