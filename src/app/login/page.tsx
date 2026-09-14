@@ -1,29 +1,58 @@
+
 "use client";
 
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const [disabledButton, setdisabledButton] = useState(false)
-  const [loading,setLoading ] = useState(false)
+
+  const [disabledButton, setDisabledButton] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+
+  // Disable button when email or password is empty
   useEffect(() => {
-    if (user.email.length>0 && user.password.length>0) {
-      setdisabledButton(false)
-    }else{
-      true
+    if (user.email.length > 0 && user.password.length > 0) {
+      setDisabledButton(false);
+    } else {
+      setDisabledButton(true);
     }
-  }, [user])
-  
+  }, [user]);
 
   const onLogin = async () => {
-    
+    try {
+      setLoading(true);
+
+      const response = await axios.post("/api/users/login", user);
+
+      console.log("Login success:", response.data);
+
+      toast.success("LOGIN SUCCESSFULLY");
+
+      router.push("/profile");
+
+    } catch (error) {
+      console.log("Login error:", error);
+
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message ||
+            "LOGIN FAILED. PLEASE TRY AGAIN!"
+        );
+      } else {
+        toast.error("SOMETHING WENT WRONG!");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,7 +115,6 @@ export default function LoginPage() {
           </span>
         </div>
 
-
         {/* Content */}
         <div className="p-6 md:p-8">
 
@@ -111,9 +139,7 @@ export default function LoginPage() {
             </h1>
 
             <div className="h-0.75 w-24 bg-[#a0522d] mt-3" />
-
           </div>
-
 
           {/* Email */}
           <div className="mb-5">
@@ -151,7 +177,6 @@ export default function LoginPage() {
 
           </div>
 
-
           {/* Password */}
           <div className="mb-6">
 
@@ -188,31 +213,43 @@ export default function LoginPage() {
 
           </div>
 
-
           {/* Login Button */}
           <button
             onClick={onLogin}
-            className="
+            disabled={disabledButton || loading}
+            className={`
               w-full
               border-2
               border-[#4a3426]
-              bg-[#a0522d]
-              text-[#f8f0df]
               py-3
               font-mono
               font-black
               tracking-widest
               uppercase
-              hover:bg-[#4a3426]
-              hover:text-[#f3ead8]
-              hover:shadow-[5px_5px_0px_#c9b99a]
-              active:translate-y-0.5
               transition-all
-            "
-          >
-            [ ACCESS SYSTEM ]
-          </button>
 
+              ${
+                disabledButton || loading
+                  ? `
+                    bg-[#c9b99a]
+                    text-[#8b6f47]
+                    cursor-not-allowed
+                    opacity-70
+                  `
+                  : `
+                    bg-[#a0522d]
+                    text-[#f8f0df]
+                    hover:bg-[#4a3426]
+                    hover:text-[#f3ead8]
+                    hover:shadow-[5px_5px_0px_#c9b99a]
+                    active:translate-y-0.5
+                    cursor-pointer
+                  `
+              }
+            `}
+          >
+            {loading ? "[ AUTHENTICATING... ]" : "[ ACCESS SYSTEM ]"}
+          </button>
 
           {/* Signup */}
           <p className="text-center text-xs font-mono text-[#8b6f47] mt-6">
@@ -236,7 +273,6 @@ export default function LoginPage() {
 
         </div>
 
-
         {/* Footer */}
         <div
           className="
@@ -251,12 +287,18 @@ export default function LoginPage() {
             justify-between
           "
         >
-          <span>AUTH: READY</span>
-          <span>SERVER: CONNECTED</span>
+          <span>
+            AUTH: {loading ? "PROCESSING..." : "READY"}
+          </span>
+
+          <span>
+            SERVER: CONNECTED
+          </span>
         </div>
 
       </div>
-
     </main>
   );
 }
+
+
