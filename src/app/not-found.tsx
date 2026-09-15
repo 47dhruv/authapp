@@ -1,4 +1,26 @@
-export default function NotFound() {
+
+"use client";
+
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import toast from "react-hot-toast";
+
+export default function ProfilePage() {
+  const router = useRouter();
+
+  const logout = async () => {
+    try {
+      await axios.get("/api/user/logout");
+
+      toast.success("LOGOUT SUCCESSFULLY");
+      router.push("/login");
+    } catch (error) {
+      console.log("LOGOUT API ERROR:", error);
+      toast.error("LOGOUT FAILED");
+    }
+  };
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-black flex items-center justify-center px-6">
 
@@ -13,69 +35,112 @@ export default function NotFound() {
         "
       />
 
-      <div className="relative text-center font-mono">
+      <div className="relative w-full max-w-lg text-center font-mono">
 
-        {/* System Error */}
+        {/* System Header */}
         <p className="mb-4 text-sm text-green-400">
-          &gt; SYSTEM ERROR
+          &gt; USER PROFILE
         </p>
 
-        {/* 404 */}
+        {/* Profile Title */}
         <h1
           className="
-            text-[120px]
-            md:text-[200px]
+            text-5xl
+            md:text-7xl
             font-black
-            leading-none
+            uppercase
+            tracking-[0.2em]
             text-transparent
             bg-clip-text
             bg-linear-to-b
             from-[#ff3c00]
             to-[#ff8c00]
-            drop-shadow-[6px_6px_0px_#7a1800]
+            drop-shadow-[4px_4px_0px_#7a1800]
           "
         >
-          404
+          PROFILE
         </h1>
 
-        {/* Title */}
-        <h2 className="mt-4 text-2xl md:text-4xl text-white uppercase tracking-[0.3em]">
-          Page Not Found
-        </h2>
-
-        {/* Error information */}
-        <p className="mt-6 text-gray-500 leading-7">
-          LOCATION: UNKNOWN
-          <br />
-          STATUS: ERROR
-        </p>
-
-        {/* Home button */}
-        <a
-          href="/"
+        {/* User Information */}
+        <div
           className="
-            inline-block
             mt-8
             border-2
             border-green-400
-            px-8
-            py-3
-            text-green-400
-            uppercase
-            hover:bg-green-400
-            hover:text-black
-            transition-colors
+            p-6
+            text-left
+            text-gray-400
           "
         >
-          [ Return Home ]
-        </a>
+          <p className="text-green-400 mb-4">
+            &gt; USER_INFORMATION
+          </p>
+
+          <p className="leading-7">
+            USER: ACTIVE
+            <br />
+            STATUS: ONLINE
+            <br />
+            ACCESS: AUTHORIZED
+          </p>
+        </div>
+
+        {/* System Message */}
+        <p className="mt-6 text-gray-500 leading-7">
+          &gt; WELCOME BACK, USER
+          <br />
+          &gt; YOUR SESSION IS ACTIVE
+        </p>
+
+        {/* Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+
+          {/* Home */}
+          <Link
+            href="/"
+            className="
+              inline-block
+              border-2
+              border-green-400
+              px-8
+              py-3
+              text-green-400
+              uppercase
+              hover:bg-green-400
+              hover:text-black
+              transition-colors
+            "
+          >
+            [ Home ]
+          </Link>
+
+          {/* Logout */}
+          <button
+            onClick={logout}
+            className="
+              border-2
+              border-[#ff3c00]
+              px-8
+              py-3
+              text-[#ff3c00]
+              uppercase
+              hover:bg-[#ff3c00]
+              hover:text-black
+              transition-colors
+            "
+          >
+            [ Logout ]
+          </button>
+
+        </div>
 
         {/* Footer */}
         <p className="mt-10 text-xs text-gray-700">
-          © 2026 // SYSTEM_FAILURE
+          © 2026 // USER_SESSION_ACTIVE
         </p>
 
       </div>
     </main>
   );
 }
+

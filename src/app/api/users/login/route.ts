@@ -6,12 +6,13 @@ import jwt from "jsonwebtoken"
 
 connect()
 
-export default async function POST(request: NextRequest) {
+export  async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
-        const [email, password] = reqBody
+        const {email, password} = reqBody
+        console.log(reqBody)
         const user = await Users.findOne({ email })
-
+        console.log(user)
         if (!user) {
             return NextResponse.json({ error: "the user does not exist" }, {
                 status: 401,
@@ -41,9 +42,19 @@ export default async function POST(request: NextRequest) {
         response.cookies.set("token", token, {
             httpOnly: true,
         })
-
+       console.log(response)
         return response
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        console.log("LOGIN API ERROR:", error);
+
+    return NextResponse.json(
+        {
+            message: error.message || "Login failed",
+        },
+        {
+            status: 500,
+        }
+    );
+
     }
 }
