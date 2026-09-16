@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -18,7 +17,7 @@ export default function LoginPage() {
 
   const router = useRouter();
 
-  // Disable button when email or password is empty
+  // Disable login button when email or password is empty
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
       setDisabledButton(false);
@@ -27,6 +26,7 @@ export default function LoginPage() {
     }
   }, [user]);
 
+  // Login function
   const onLogin = async () => {
     try {
       setLoading(true);
@@ -38,14 +38,14 @@ export default function LoginPage() {
       toast.success("LOGIN SUCCESSFULLY");
 
       router.push("/profile");
-
     } catch (error) {
       console.log("Login error:", error);
 
       if (axios.isAxiosError(error)) {
         toast.error(
           error.response?.data?.message ||
-            "LOGIN FAILED. PLEASE TRY AGAIN!"
+          error.response?.data?.error ||
+          "LOGIN FAILED. PLEASE TRY AGAIN!"
         );
       } else {
         toast.error("SOMETHING WENT WRONG!");
@@ -54,6 +54,36 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  // forgot password
+  const onForgotPassword = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.post("/api/users/forgotpassword", {
+        email: user.email,
+      });
+
+      console.log("Forgot password:", response.data);
+
+      toast.success("RESET PASSWORD EMAIL SENT!");
+    } catch (error) {
+      console.log("Forgot password error:", error);
+
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          "RESET PASSWORD FAILED!"
+        );
+      } else {
+        toast.error("SOMETHING WENT WRONG!");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <main className="min-h-screen bg-[#f3ead8] text-[#3b2a20] flex items-center justify-center px-4 relative overflow-hidden">
@@ -75,7 +105,7 @@ export default function LoginPage() {
           absolute inset-0
           opacity-[0.08]
           bg-[linear-gradient(to_bottom,transparent_50%,#3b2a20_50%)]
-          bg-length-[100%_4px]
+          bg-size-[100%_4px]
         "
       />
 
@@ -108,7 +138,7 @@ export default function LoginPage() {
             border-[#4a3426]
           "
         >
-          <span>CLIENT_SERVER</span>
+          <span>CLIENT_SERVER\</span>
 
           <span className="text-xs">
             ● ONLINE
@@ -120,7 +150,6 @@ export default function LoginPage() {
 
           {/* Title */}
           <div className="mb-8">
-
             <p className="text-xs text-[#8b6f47] mb-2 font-mono">
               &gt; AUTHENTICATION_REQUIRED...
             </p>
@@ -143,7 +172,6 @@ export default function LoginPage() {
 
           {/* Email */}
           <div className="mb-5">
-
             <label className="block text-xs font-mono mb-2 text-[#6f5238]">
               EMAIL_ADDRESS
             </label>
@@ -174,12 +202,10 @@ export default function LoginPage() {
                 transition
               "
             />
-
           </div>
 
           {/* Password */}
-          <div className="mb-6">
-
+          <div className="mb-2">
             <label className="block text-xs font-mono mb-2 text-[#6f5238]">
               PASSWORD
             </label>
@@ -210,8 +236,35 @@ export default function LoginPage() {
                 transition
               "
             />
-
           </div>
+
+          {/* Forgot Password */}
+          <button
+            type="button"
+            onClick={onForgotPassword}
+            disabled={!user.email || loading}
+            className={`
+                text-xs
+                font-mono
+                font-bold
+                transition
+                ${!user.email || loading
+                ? `
+                      text-[#9b8061]
+                      cursor-not-allowed
+                      opacity-60
+                    `
+                : `
+                      text-[#a0522d]
+                      hover:text-[#3b2a20]
+                      hover:underline
+                      cursor-pointer
+                    `
+              }
+              `}
+          >
+            [ FORGOT_PASSWORD? ]
+          </button>
 
           {/* Login Button */}
           <button
@@ -227,16 +280,14 @@ export default function LoginPage() {
               tracking-widest
               uppercase
               transition-all
-
-              ${
-                disabledButton || loading
-                  ? `
+              ${disabledButton || loading
+                ? `
                     bg-[#c9b99a]
                     text-[#8b6f47]
                     cursor-not-allowed
                     opacity-70
                   `
-                  : `
+                : `
                     bg-[#a0522d]
                     text-[#f8f0df]
                     hover:bg-[#4a3426]
@@ -253,7 +304,6 @@ export default function LoginPage() {
 
           {/* Signup */}
           <p className="text-center text-xs font-mono text-[#8b6f47] mt-6">
-
             NEW_USER?
 
             <Link
@@ -268,9 +318,7 @@ export default function LoginPage() {
             >
               CREATE_ACCOUNT_
             </Link>
-
           </p>
-
         </div>
 
         {/* Footer */}
@@ -295,10 +343,7 @@ export default function LoginPage() {
             SERVER: CONNECTED
           </span>
         </div>
-
       </div>
     </main>
   );
 }
-
-

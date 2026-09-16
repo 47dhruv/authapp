@@ -2,7 +2,7 @@ import { connect } from "@/dbConfig/dbConfig";
 import { NextRequest,NextResponse } from "next/server";
 import Users from "@/models/userModel";
 
-
+connect();
 export async function POST(request :NextRequest) {
     try {
         const reqBody= await request.json()
