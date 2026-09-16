@@ -1,69 +1,336 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="min-h-screen bg-[#f3ead8] text-[#3b2a20] relative overflow-hidden">
+
+      {/* =====================================
+          RETRO BACKGROUND GRID
+      ====================================== */}
+      <div
+        className="
+          absolute inset-0 opacity-20
+          bg-[linear-gradient(#8b6f47_1px,transparent_1px),
+              linear-gradient(90deg,#8b6f47_1px,transparent_1px)]
+          bg-size-[40px_40px]
+        "
+      />
+
+      {/* =====================================
+          CRT SCANLINES
+      ====================================== */}
+      <div
+        className="
+          pointer-events-none
+          absolute inset-0
+          opacity-[0.08]
+          bg-[linear-gradient(to_bottom,transparent_50%,#3b2a20_50%)]
+          bg-size-[100%_4px]
+        "
+      />
+
+      {/* =====================================
+          MAIN TERMINAL
+      ====================================== */}
+      <div className="relative min-h-screen flex flex-col">
+
+        {/* =====================================
+            NAVBAR / TERMINAL HEADER
+        ====================================== */}
+        <header
+          className="
+            w-full
+            border-b-2
+            border-[#4a3426]
+            bg-[#f8f0df]
+          "
+        >
+          <div
+            className="
+              max-w-6xl
+              mx-auto
+              px-5
+              py-4
+              flex
+              items-center
+              justify-between
+            "
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+            {/* LOGO */}
+            <Link
+              href="/"
+              className="
+                font-mono
+                font-black
+                tracking-widest
+                text-lg
+                md:text-xl
+              "
+            >
+              <span className="text-[#3b2a20]">
+                CLIENT
+              </span>
+              <span className="text-[#a0522d]">
+                _
+              </span>
+              <span className="text-[#3b2a20]">
+                SERVER
+              </span>
+            </Link>
+
+            {/* STATUS */}
+            <div
+              className="
+                text-xs
+                font-mono
+                text-[#8b6f47]
+              "
+            >
+              ● SYSTEM ONLINE
+            </div>
+
+          </div>
+        </header>
+
+        {/* =====================================
+            HERO SECTION
+        ====================================== */}
+        <section
+          className="
+            flex-1
+            flex
+            items-center
+            justify-center
+            px-5
+            py-16
+          "
+        >
+
+          <div className="w-full max-w-4xl text-center">
+
+            {/* TERMINAL MESSAGE */}
+            <p
+              className="
+                text-xs
+                md:text-sm
+                font-mono
+                text-[#8b6f47]
+                mb-5
+              "
+            >
+              &gt; INITIALIZING_CLIENT_SERVER...
+            </p>
+
+            {/* MAIN TITLE */}
+            <h1
+              className="
+                text-5xl
+                sm:text-6xl
+                md:text-8xl
+                font-black
+                tracking-widest
+                text-[#3b2a20]
+                drop-shadow-[5px_5px_0px_#c9b99a]
+              "
+            >
+              WELCOME
+            </h1>
+
+            <h2
+              className="
+                mt-2
+                text-3xl
+                sm:text-4xl
+                md:text-5xl
+                font-black
+                tracking-widest
+                text-[#a0522d]
+              "
+            >
+              USER_
+            </h2>
+
+            {/* DESCRIPTION */}
+            <p
+              className="
+                max-w-xl
+                mx-auto
+                mt-6
+                text-sm
+                md:text-base
+                leading-7
+                font-mono
+                text-[#6f5238]
+              "
+            >
+              &gt; SECURE AUTHENTICATION SYSTEM
+              <br />
+              &gt; ACCESS YOUR ACCOUNT OR CREATE A NEW SESSION
+            </p>
+
+            {/* =====================================
+                TERMINAL STATUS BOX
+            ====================================== */}
+            <div
+              className="
+                max-w-md
+                mx-auto
+                mt-8
+                border-2
+                border-[#9b8061]
+                bg-[#eee2cc]
+                p-5
+                text-left
+                font-mono
+              "
+            >
+
+              <p className="text-xs text-[#a0522d] mb-4">
+                &gt; SYSTEM_INFORMATION
+              </p>
+
+              <div className="space-y-2 text-xs md:text-sm text-[#6f5238]">
+
+                <p>
+                  SERVER_STATUS:
+                  <span className="ml-2 font-bold text-[#3b2a20]">
+                    ONLINE
+                  </span>
+                </p>
+
+                <p>
+                  DATABASE:
+                  <span className="ml-2 font-bold text-[#3b2a20]">
+                    CONNECTED
+                  </span>
+                </p>
+
+                <p>
+                  SECURITY:
+                  <span className="ml-2 font-bold text-[#a0522d]">
+                    ENABLED
+                  </span>
+                </p>
+
+              </div>
+
+            </div>
+
+            {/* =====================================
+                ACTION BUTTONS
+            ====================================== */}
+            <div
+              className="
+                mt-10
+                flex
+                flex-col
+                sm:flex-row
+                gap-4
+                justify-center
+              "
+            >
+
+              {/* LOGIN */}
+              <Link
+                href="/login"
+                className="
+                  min-w-47.5
+                  border-2
+                  border-[#4a3426]
+                  bg-[#a0522d]
+                  text-[#f8f0df]
+                  px-8
+                  py-3
+                  font-mono
+                  font-black
+                  tracking-widest
+                  uppercase
+                  hover:bg-[#4a3426]
+                  hover:text-[#f3ead8]
+                  hover:shadow-[5px_5px_0px_#c9b99a]
+                  transition-all
+                  active:translate-y-0.5
+                "
+              >
+                [ LOGIN ]
+              </Link>
+
+              {/* SIGNUP */}
+              <Link
+                href="/signup"
+                className="
+                  min-w-47.5
+                  border-2
+                  border-[#4a3426]
+                  bg-[#c9b99a]
+                  text-[#3b2a20]
+                  px-8
+                  py-3
+                  font-mono
+                  font-black
+                  tracking-widest
+                  uppercase
+                  hover:bg-[#4a3426]
+                  hover:text-[#f3ead8]
+                  hover:shadow-[5px_5px_0px_#8b6f47]
+                  transition-all
+                  active:translate-y-0.5
+                "
+              >
+                [ SIGN UP ]
+              </Link>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================
+            FOOTER
+        ====================================== */}
+        <footer
+          className="
+            border-t-2
+            border-[#c9b99a]
+            bg-[#f8f0df]
+            px-5
+            py-4
+          "
+        >
+          <div
+            className="
+              max-w-6xl
+              mx-auto
+              flex
+              flex-col
+              sm:flex-row
+              justify-between
+              gap-2
+              text-[10px]
+              font-mono
+              text-[#8b6f47]
+            "
           >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <span>
+              CLIENT: ONLINE\
+            </span>
+
+            <span>
+              SERVER: CONNECTED\
+            </span>
+
+            <span>
+              © 2026 // CLIENT_SERVER
+            </span>
+          </div>
+        </footer>
+
+      </div>
+
+    </main>
   );
 }
