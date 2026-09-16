@@ -158,15 +158,17 @@ export default function ResetPasswordPage() {
 
             <h1
               className="
-                text-4xl
-                md:text-5xl
-                font-black
-                tracking-widest
-                text-[#3b2a20]
-                drop-shadow-[3px_3px_0px_#c9b99a]
-              "
+                  text-3xl
+                  sm:text-4xl
+                  md:text-5xl
+                  font-black
+                  tracking-[0.15em]
+                  text-[#3b2a20]
+                  drop-shadow-[3px_3px_0px_#c9b99a]
+                  break-words
+                "
             >
-              RESET
+              RESET{" "}
               <span className="text-[#a0522d]">
                 PASSWORD
               </span>
