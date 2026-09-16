@@ -233,11 +233,15 @@ export default function Home() {
               "
             >
 
-              {/* LOGIN */}
-              <Link
-                href="/login"
-                className="
-                  min-w-47.5
+              {/* =====================================
+                        PROFILE BUTTON
+                  ====================================== */}
+              <div className="mt-10 flex justify-center">
+
+                <Link
+                  href="/profile"
+                  className="
+                  min-w-55
                   border-2
                   border-[#4a3426]
                   bg-[#a0522d]
@@ -254,34 +258,11 @@ export default function Home() {
                   transition-all
                   active:translate-y-0.5
                 "
-              >
-                [ LOGIN ]
-              </Link>
+                >
+                  [ PROFILE ]
+                </Link>
 
-              {/* SIGNUP */}
-              <Link
-                href="/signup"
-                className="
-                  min-w-47.5
-                  border-2
-                  border-[#4a3426]
-                  bg-[#c9b99a]
-                  text-[#3b2a20]
-                  px-8
-                  py-3
-                  font-mono
-                  font-black
-                  tracking-widest
-                  uppercase
-                  hover:bg-[#4a3426]
-                  hover:text-[#f3ead8]
-                  hover:shadow-[5px_5px_0px_#8b6f47]
-                  transition-all
-                  active:translate-y-0.5
-                "
-              >
-                [ SIGN UP ]
-              </Link>
+              </div>
 
             </div>
 

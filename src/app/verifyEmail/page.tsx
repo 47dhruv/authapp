@@ -11,21 +11,22 @@ export default function VerifyEmailPage() {
 
   const verifyEmail = async () => {
     try {
-      await axios.post("/api/users/verifyEmail", token);
+      await axios.post("/api/users/verifyEmail", {
+        token: token,
+      });
 
       setVerified(true);
     } catch (error: any) {
       setError(true);
-      console.log(error?.response?.data);
+      console.log("Verify Email API Error:", error?.response?.data);
     }
   };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-  const urlToken = searchParams.get("token") || "";
+    const urlToken = searchParams.get("token") || "";
 
-  setToken(urlToken);
-
+    setToken(urlToken);
   }, []);
 
   useEffect(() => {
@@ -107,7 +108,9 @@ export default function VerifyEmailPage() {
         ====================================== */}
         <div className="p-6 md:p-8">
 
-          {/* TITLE */}
+          {/* =====================================
+              TITLE
+          ====================================== */}
           <div className="mb-8">
 
             <p className="text-xs text-[#8b6f47] mb-2 font-mono">
@@ -135,6 +138,37 @@ export default function VerifyEmailPage() {
           </div>
 
           {/* =====================================
+              TOKEN DISPLAY
+          ====================================== */}
+          <div
+            className="
+              mb-5
+              border-2
+              border-[#9b8061]
+              bg-[#eee2cc]
+              p-4
+              font-mono
+            "
+          >
+
+            <p className="text-xs text-[#8b6f47] mb-2">
+              VERIFICATION_TOKEN
+            </p>
+
+            <p
+              className="
+                text-xs
+                text-[#3b2a20]
+                break-all
+                leading-5
+              "
+            >
+              {token || "WAITING_FOR_TOKEN..."}
+            </p>
+
+          </div>
+
+          {/* =====================================
               VERIFICATION STATUS
           ====================================== */}
           <div
@@ -147,6 +181,7 @@ export default function VerifyEmailPage() {
             "
           >
 
+            {/* LOADING */}
             {!verified && !error && (
               <>
                 <p className="text-[#a0522d] text-sm mb-4">
@@ -220,11 +255,11 @@ export default function VerifyEmailPage() {
           </div>
 
           {/* =====================================
-              LOGIN BUTTON
+              HOME BUTTON
           ====================================== */}
           {verified && (
             <Link
-              href="/login"
+              href="/"
               className="
                 block
                 w-full
@@ -246,37 +281,7 @@ export default function VerifyEmailPage() {
                 active:translate-y-0.5
               "
             >
-              [ LOGIN ]
-            </Link>
-          )}
-
-          {/* =====================================
-              ERROR → SIGNUP
-          ====================================== */}
-          {error && (
-            <Link
-              href="/signup"
-              className="
-                block
-                w-full
-                mt-8
-                text-center
-                border-2
-                border-[#4a3426]
-                bg-[#c9b99a]
-                text-[#3b2a20]
-                py-3
-                font-mono
-                font-black
-                tracking-widest
-                uppercase
-                hover:bg-[#4a3426]
-                hover:text-[#f3ead8]
-                hover:shadow-[5px_5px_0px_#8b6f47]
-                transition-all
-              "
-            >
-              [ CREATE NEW ACCOUNT ]
+              [ HOME ]
             </Link>
           )}
 
@@ -303,6 +308,7 @@ export default function VerifyEmailPage() {
         </div>
 
       </div>
+
     </main>
   );
 }

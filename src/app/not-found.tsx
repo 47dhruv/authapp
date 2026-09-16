@@ -1,146 +1,204 @@
-
 "use client";
 
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Link from "next/link";
-import toast from "react-hot-toast";
 
-export default function ProfilePage() {
-  const router = useRouter();
-
-  const logout = async () => {
-    try {
-      await axios.get("/api/user/logout");
-
-      toast.success("LOGOUT SUCCESSFULLY");
-      router.push("/login");
-    } catch (error) {
-      console.log("LOGOUT API ERROR:", error);
-      toast.error("LOGOUT FAILED");
-    }
-  };
-
+export default function NotFound() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black flex items-center justify-center px-6">
+    <main className="min-h-screen bg-[#f3ead8] text-[#3b2a20] flex items-center justify-center px-4 relative overflow-hidden">
 
-      {/* CRT Scanlines */}
+      {/* =====================================
+          RETRO BACKGROUND GRID
+      ====================================== */}
+      <div
+        className="
+          absolute inset-0 opacity-20
+          bg-[linear-gradient(#8b6f47_1px,transparent_1px),
+              linear-gradient(90deg,#8b6f47_1px,transparent_1px)]
+          bg-size-[40px_40px]
+        "
+      />
+
+      {/* =====================================
+          CRT SCANLINES
+      ====================================== */}
       <div
         className="
           pointer-events-none
           absolute inset-0
-          opacity-10
-          bg-[linear-gradient(to_bottom,transparent_50%,#fff_50%)]
+          opacity-[0.08]
+          bg-[linear-gradient(to_bottom,transparent_50%,#3b2a20_50%)]
           bg-size-[100%_4px]
         "
       />
 
-      <div className="relative w-full max-w-lg text-center font-mono">
+      {/* =====================================
+          MAIN TERMINAL CARD
+      ====================================== */}
+      <div
+        className="
+          relative
+          w-full
+          max-w-md
+          bg-[#f8f0df]
+          border-2
+          border-[#4a3426]
+          shadow-[8px_8px_0px_#8b6f47]
+        "
+      >
 
-        {/* System Header */}
-        <p className="mb-4 text-sm text-green-400">
-          &gt; USER PROFILE
-        </p>
-
-        {/* Profile Title */}
-        <h1
-          className="
-            text-5xl
-            md:text-7xl
-            font-black
-            uppercase
-            tracking-[0.2em]
-            text-transparent
-            bg-clip-text
-            bg-linear-to-b
-            from-[#ff3c00]
-            to-[#ff8c00]
-            drop-shadow-[4px_4px_0px_#7a1800]
-          "
-        >
-          PROFILE
-        </h1>
-
-        {/* User Information */}
+        {/* =====================================
+            TERMINAL HEADER
+        ====================================== */}
         <div
           className="
-            mt-8
-            border-2
-            border-green-400
-            p-6
-            text-left
-            text-gray-400
+            flex
+            justify-between
+            items-center
+            px-5
+            py-3
+            bg-[#4a3426]
+            text-[#f3ead8]
+            border-b-2
+            border-[#4a3426]
+            font-mono
+            font-bold
           "
         >
-          <p className="text-green-400 mb-4">
-            &gt; USER_INFORMATION
-          </p>
+          <span>CLIENT_SERVER\</span>
 
-          <p className="leading-7">
-            USER: ACTIVE
-            <br />
-            STATUS: ONLINE
-            <br />
-            ACCESS: AUTHORIZED
-          </p>
+          <span className="text-xs">
+            ● ONLINE
+          </span>
         </div>
 
-        {/* System Message */}
-        <p className="mt-6 text-gray-500 leading-7">
-          &gt; WELCOME BACK, USER
-          <br />
-          &gt; YOUR SESSION IS ACTIVE
-        </p>
+        {/* =====================================
+            MAIN CONTENT
+        ====================================== */}
+        <div className="p-6 md:p-8">
 
-        {/* Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          {/* =====================================
+              ERROR TITLE
+          ====================================== */}
+          <div className="mb-8">
 
-          {/* Home */}
+            <p className="text-xs text-[#8b6f47] mb-2 font-mono">
+              &gt; SEARCHING_FOR_PAGE...
+            </p>
+
+            <h1
+              className="
+                text-6xl
+                md:text-7xl
+                font-black
+                tracking-widest
+                text-[#a0522d]
+                drop-shadow-[4px_4px_0px_#c9b99a]
+              "
+            >
+              404
+            </h1>
+
+            <div className="h-1 w-24 bg-[#a0522d] mt-3" />
+          </div>
+
+          {/* =====================================
+              ERROR STATUS
+          ====================================== */}
+          <div
+            className="
+              border-2
+              border-[#9b8061]
+              bg-[#eee2cc]
+              p-5
+              font-mono
+            "
+          >
+
+            <p className="text-[#a0522d] text-sm mb-4">
+              &gt; ERROR_PAGE_NOT_FOUND
+            </p>
+
+            <p className="text-[#3b2a20] text-sm leading-7">
+              THE REQUESTED PAGE DOES NOT EXIST.
+              <br />
+              THE RESOURCE MAY HAVE BEEN MOVED
+              <br />
+              OR DELETED.
+            </p>
+
+            {/* STATUS */}
+            <div className="mt-5 border-t-2 border-[#c9b99a] pt-4">
+
+              <p className="text-[#8b6f47] text-xs">
+                STATUS:
+                <span className="ml-2 text-[#a0522d] font-bold">
+                  ● 404 NOT FOUND
+                </span>
+              </p>
+
+              <p className="text-[#8b6f47] text-xs mt-2">
+                SERVER:
+                <span className="ml-2 text-[#3b2a20]">
+                  ONLINE
+                </span>
+              </p>
+
+            </div>
+          </div>
+
+          {/* =====================================
+              HOME BUTTON
+          ====================================== */}
           <Link
             href="/"
             className="
-              inline-block
+              block
+              w-full
+              mt-8
+              text-center
               border-2
-              border-green-400
-              px-8
+              border-[#4a3426]
+              bg-[#a0522d]
+              text-[#f8f0df]
               py-3
-              text-green-400
+              font-mono
+              font-black
+              tracking-widest
               uppercase
-              hover:bg-green-400
-              hover:text-black
-              transition-colors
+              hover:bg-[#4a3426]
+              hover:text-[#f3ead8]
+              hover:shadow-[5px_5px_0px_#c9b99a]
+              transition-all
+              active:translate-y-0.5
             "
           >
-            [ Home ]
+            [ HOME ]
           </Link>
-
-          {/* Logout */}
-          <button
-            onClick={logout}
-            className="
-              border-2
-              border-[#ff3c00]
-              px-8
-              py-3
-              text-[#ff3c00]
-              uppercase
-              hover:bg-[#ff3c00]
-              hover:text-black
-              transition-colors
-            "
-          >
-            [ Logout ]
-          </button>
 
         </div>
 
-        {/* Footer */}
-        <p className="mt-10 text-xs text-gray-700">
-          © 2026 // USER_SESSION_ACTIVE
-        </p>
+        {/* =====================================
+            TERMINAL FOOTER
+        ====================================== */}
+        <div
+          className="
+            border-t-2
+            border-[#c9b99a]
+            px-5
+            py-3
+            text-[10px]
+            font-mono
+            text-[#8b6f47]
+            flex
+            justify-between
+          "
+        >
+          <span>CLIENT: ONLINE\</span>
+          <span>SERVER: CONNECTED\</span>
+        </div>
 
       </div>
     </main>
   );
 }
-
